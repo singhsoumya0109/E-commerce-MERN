@@ -37,7 +37,7 @@ const setCookies = (res, accessToken, refreshToken) => {
 }
 
 export const signup = async (req, res) => {
-  const { name, email, password, role } = req.body;
+  const { name, email, password, role = "customer" } = req.body;
 
   if (!["customer", "admin"].includes(role)) {
     return res.status(400).json({ message: "Invalid role specified" });
