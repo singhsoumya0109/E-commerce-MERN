@@ -1,16 +1,23 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Homepage from "./pages/Homepage";
 import Login from "./pages/Login";
-import Navbar from "./components/Navbar";
 import Signup from "./pages/Signup";
-import './App.css';
+import Navbar from "./components/Navbar";
+import LoadingSpinner from "./components/loadingspinner";
+import AdminPage from "./pages/AdminPage";
+import "./App.css";
 import { Toaster } from "react-hot-toast";
 import { useUserStore } from "./stores/useUserStore";
-
+import { useEffect } from "react";
 
 function App() {
+  const { user,checkAuth,checkingAuth } = useUserStore();
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
 
-  const { user } = useUserStore();
+  if (checkingAuth) return <LoadingSpinner />;
+
   return (
     <div className="min-h-screen bg-gray-900 text-white relative overflow-hidden">
       {/* Background gradient */}
@@ -23,8 +30,20 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Homepage />} />
-          <Route path="/login" element={user ? <Homepage /> : <Login />} />
-          <Route path="/signup" element={user ? <Homepage /> : <Signup />} />
+          <Route
+            path="/login"
+            element={user ? <Navigate to="/" /> : <Login />}
+          />
+          <Route
+            path="/signup"
+            element={user ? <Navigate to="/" /> : <Signup />}
+          />
+          <Route
+            path="/secret-dashboard"
+            element={
+              user?.role === "admin" ? <AdminPage /> : <Navigate to="/login" />
+            }
+          />
         </Routes>
       </div>
       <Toaster />
@@ -32,4 +51,4 @@ function App() {
   );
 }
 
-export default App
+export default App;
