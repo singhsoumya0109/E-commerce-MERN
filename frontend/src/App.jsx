@@ -6,13 +6,17 @@ import Navbar from "./components/Navbar";
 import LoadingSpinner from "./components/loadingspinner";
 import AdminPage from "./pages/AdminPage";
 import CategoryPage from "./pages/CategoryPage";
-import "./App.css";
+import CartPage from "./pages/CartPage";
 import { Toaster } from "react-hot-toast";
 import { useUserStore } from "./stores/useUserStore";
 import { useEffect } from "react";
+import { useCartStore } from "./stores/useCartStore";
 
 function App() {
-  const { user,checkAuth,checkingAuth } = useUserStore();
+  const { user, checkAuth, checkingAuth } = useUserStore();
+  const { getCartItems } = useCartStore();
+
+  useEffect(() => { getCartItems()}, [getCartItems]);
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
@@ -45,12 +49,8 @@ function App() {
               user?.role === "admin" ? <AdminPage /> : <Navigate to="/login" />
             }
           />
-          <Route
-            path="/category/:category"
-            element={
-              <CategoryPage />
-            }
-          />
+          <Route path="/category/:category" element={<CategoryPage />} />
+          <Route path="/cart" element={<CartPage />} />
         </Routes>
       </div>
       <Toaster />
