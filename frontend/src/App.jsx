@@ -5,6 +5,7 @@ import Signup from "./pages/Signup";
 import Navbar from "./components/Navbar";
 import LoadingSpinner from "./components/loadingspinner";
 import AdminPage from "./pages/AdminPage";
+import CategoryPage from "./pages/CategoryPage";
 import "./App.css";
 import { Toaster } from "react-hot-toast";
 import { useUserStore } from "./stores/useUserStore";
@@ -42,6 +43,12 @@ function App() {
             path="/secret-dashboard"
             element={
               user?.role === "admin" ? <AdminPage /> : <Navigate to="/login" />
+            }
+          />
+          <Route
+            path="/category/:category"
+            element={
+              <CategoryPage />
             }
           />
         </Routes>
