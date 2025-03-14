@@ -14,7 +14,7 @@ export const getAllProducts = async (requestAnimationFrame, res) => {
 
 export const getFeauturedProducts = async (req, res) => {
   try {
-    let feauturedProducts = await redis.get("featured_prodcuts");
+    let feauturedProducts = await redis.get("featured_products");
 
     if (feauturedProducts) {
       return res.json(JSON.parse(feauturedProducts));
@@ -143,8 +143,8 @@ export const toggleFeaturedProduct = async (req, res) => {
 async function updateFeaturedProductsCache() {
   try {
     const featuredProducts = await Product.find({ isFeatured: true }).lean();
-    await redis.set("featured_product", JSON.stringify(featuredProducts));
+    await redis.set("featured_products", JSON.stringify(featuredProducts));
   } catch (error) {
-    console.log("Error in pdateFeaturedProductsCache", error);
+    console.log("Error in updateFeaturedProductsCache", error);
   }
 }

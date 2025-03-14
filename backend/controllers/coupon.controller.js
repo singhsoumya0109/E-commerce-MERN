@@ -42,3 +42,20 @@ export const validateCoupon = async (req, res) => {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
+
+export const createCoupon = async (req, res) => {
+  try {
+    const { code, discountPercentage, expirationDate } = req.body;
+    const newCoupon = new Coupon({
+      code,
+      discountPercentage,
+      expirationDate,
+      userId: req.user._id,
+    });
+    await newCoupon.save();
+    res.status(201).json(newCoupon);
+  } catch (error) {
+    console.log("Error in createCoupon controller", error.message);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
