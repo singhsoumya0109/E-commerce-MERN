@@ -18,11 +18,16 @@ export const useUserStore = create((set, get) => ({
     try {
       const res = await axios.post("/auth/signup", { name, email, password });
       set({ user: res.data, loading: false });
+      localStorage.setItem("accessToken", res.data.token);
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${res.data.token}`;
     } catch (error) {
       set({ loading: false });
       toast.error(error.response.data.message || "An error occurred");
     }
   },
+
   login: async (email, password) => {
     set({ loading: true });
 
@@ -30,6 +35,10 @@ export const useUserStore = create((set, get) => ({
       const res = await axios.post("/auth/login", { email, password });
 
       set({ user: res.data, loading: false });
+      localStorage.setItem("accessToken", res.data.token);
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${res.data.token}`;
     } catch (error) {
       set({ loading: false });
       toast.error(error.response.data.message || "An error occurred");
@@ -40,6 +49,8 @@ export const useUserStore = create((set, get) => ({
     try {
       await axios.post("/auth/logout");
       set({ user: null });
+      localStorage.removeItem("accessToken");
+      delete axios.defaults.headers.common["Authorization"];
     } catch (error) {
       toast.error(
         error.response?.data?.message || "An error occurred during logout"
@@ -59,52 +70,22 @@ export const useUserStore = create((set, get) => ({
   },
 
   refreshToken: async () => {
-    // Prevent multiple simultaneous refresh attempts
     if (get().checkingAuth) return;
 
     set({ checkingAuth: true });
     try {
       const response = await axios.post("/auth/refresh-token");
+      localStorage.setItem("accessToken", response.data.token);
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${response.data.token}`;
       set({ checkingAuth: false });
-      return response.data;
+      return response.data.token;
     } catch (error) {
       set({ user: null, checkingAuth: false });
+      localStorage.removeItem("accessToken");
+      delete axios.defaults.headers.common["Authorization"];
       throw error;
     }
   },
 }));
-
-// TODO: Implement the axios interceptors for refreshing access token
-
-// Axios interceptor for token refresh
-let refreshPromise = null;
-
-axios.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    const originalRequest = error.config;
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-
-      try {
-        // If a refresh is already in progress, wait for it to complete
-        if (refreshPromise) {
-          await refreshPromise;
-          return axios(originalRequest);
-        }
-
-        // Start a new refresh process
-        refreshPromise = useUserStore.getState().refreshToken();
-        await refreshPromise;
-        refreshPromise = null;
-
-        return axios(originalRequest);
-      } catch (refreshError) {
-        // If refresh fails, redirect to login or handle as needed
-        useUserStore.getState().logout();
-        return Promise.reject(refreshError);
-      }
-    }
-    return Promise.reject(error);
-  }
-);
