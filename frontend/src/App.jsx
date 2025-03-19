@@ -7,12 +7,14 @@ import LoadingSpinner from "./components/loadingspinner";
 import AdminPage from "./pages/AdminPage";
 import CategoryPage from "./pages/CategoryPage";
 import CartPage from "./pages/CartPage";
-import ProductDetails from "./pages/ProductDetails";
+import ProductDetails from "./pages/productDetails";
+import Payment from "./pages/paymentPage";
+import OrderPage from "./pages/OrderPage";
 import { Toaster } from "react-hot-toast";
 import { useUserStore } from "./stores/useUserStore";
 import { useEffect } from "react";
 import { useCartStore } from "./stores/useCartStore";
-//import "./App.css";
+
 
 function App() {
   const { user, checkAuth, checkingAuth } = useUserStore();
@@ -57,45 +59,11 @@ function App() {
           <Route path="/category/:category" element={<CategoryPage />} />
           <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/cart" element={<CartPage />} />
+          <Route path="/payment" element={<Payment />} />
+          <Route path="/orders" element={<OrderPage />} />
         </Routes>
       </div>
       <Toaster />
-      {/* <footer className="footer">
-        <div className="container d-flex justify-content-between align-items-center">
-          <span>&copy; Soumyadeep Singh</span>
-          <div className="social-icons">
-            <a
-              href="https://www.linkedin.com/in/soumyadeep-singh-347044258/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <span>
-                <i className="bi bi-linkedin"></i>
-              </span>
-            </a>
-            <a
-              href="https://github.com/singhsoumya0109"
-              target="_blank"
-              className="github-icon"
-              rel="noreferrer"
-            >
-              <span>
-                <i className="bi bi-github"></i>
-              </span>
-            </a>
-            <a
-              href="https://singhsoumya0109.github.io/Portfolio-website/"
-              target="_blank"
-              className="portfolio-icon"
-              rel="noreferrer"
-            >
-              <span>
-                <i className="bi bi-briefcase"></i>
-              </span>
-            </a>
-          </div>
-        </div>
-      </footer> */}
       <footer className="bg-gray-800 text-white py-4 mt-10">
         <div className="container mx-auto flex flex-col md:flex-row justify-between items-center px-6">
           <span className="text-lg">&copy; Soumyadeep Singh</span>

@@ -7,6 +7,7 @@ import couponRoutes from "./routes/coupon.route.js";
 import paymentRoutes from "./routes/payment.route.js";
 import analyticsRoutes from "./routes/analytics.route.js";
 import reviewRoutes from "./routes/review.route.js";
+import orderRoutes from "./routes/order.route.js";
 import { connectDB } from "./lib/db.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -30,8 +31,8 @@ app.use("/api/coupons", couponRoutes);
 app.use("/api/payments", paymentRoutes);
 app.use("/api/analytics", analyticsRoutes);
 app.use("/api/reviews", reviewRoutes);
+app.use("/api/orders", orderRoutes);
 
-//2.23.30
 
 app.listen(PORT, () => {
     console.log("Server is running at port " + PORT);

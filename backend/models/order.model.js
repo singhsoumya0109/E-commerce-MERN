@@ -31,10 +31,6 @@ const orderSchema = new mongoose.Schema(
       required: true,
       min: 0,
     },
-    stripeSessionId: {
-      type: String,
-      unique: true,
-    },
   },
   { timestamps: true }
 );
@@ -42,3 +38,4 @@ const orderSchema = new mongoose.Schema(
 const Order = mongoose.model("Order", orderSchema);
 
 export default Order;
+
