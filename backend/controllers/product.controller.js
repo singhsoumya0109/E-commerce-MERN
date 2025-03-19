@@ -2,7 +2,7 @@ import Product from "../models/product.model.js";
 import { redis } from "../lib/redis.js";
 import cloudinary from "../lib/cloudinary.js";
 
-export const getAllProducts = async (requestAnimationFrame, res) => {
+export const getAllProducts = async (req, res) => {
   try {
     const products = await Product.find({});
     res.json({ products });
@@ -147,4 +147,25 @@ async function updateFeaturedProductsCache() {
   } catch (error) {
     console.log("Error in updateFeaturedProductsCache", error);
   }
-}
+};
+
+export const getProductById = async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id).populate({
+      path: "reviews",
+      populate: {
+        path: "user",
+        select: "name", // Fetch only necessary user details
+      },
+    });
+
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    res.json(product);
+  } catch (error) {
+    console.log("Error in getProductById controller", error.message);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};

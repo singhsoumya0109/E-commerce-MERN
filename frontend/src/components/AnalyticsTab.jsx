@@ -66,7 +66,7 @@ const AnalyticsTab = () => {
         />
         <AnalyticsCard
           title="Total Revenue"
-          value={`$${analyticsData.totalRevenue.toLocaleString()}`}
+          value={`${analyticsData.totalRevenue.toLocaleString()}`}
           icon={DollarSign}
           color="from-emerald-500 to-lime-700"
         />
@@ -99,7 +99,7 @@ const AnalyticsTab = () => {
               dataKey="revenue"
               stroke="#3B82F6"
               activeDot={{ r: 8 }}
-              name="Revenue"
+              name="Revenue (₹)"
             />
           </LineChart>
         </ResponsiveContainer>

@@ -7,30 +7,35 @@ import LoadingSpinner from "./components/loadingspinner";
 import AdminPage from "./pages/AdminPage";
 import CategoryPage from "./pages/CategoryPage";
 import CartPage from "./pages/CartPage";
+import ProductDetails from "./pages/ProductDetails";
 import { Toaster } from "react-hot-toast";
 import { useUserStore } from "./stores/useUserStore";
 import { useEffect } from "react";
 import { useCartStore } from "./stores/useCartStore";
+//import "./App.css";
 
 function App() {
   const { user, checkAuth, checkingAuth } = useUserStore();
   const { getCartItems } = useCartStore();
 
-  useEffect(() => { getCartItems()}, [getCartItems]);
+  useEffect(() => {
+    getCartItems();
+  }, [getCartItems]);
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
 
-  if (checkingAuth) return <LoadingSpinner />;
+  //if (checkingAuth) return <LoadingSpinner />;
 
   return (
     <div className="min-h-screen bg-gray-900 text-white relative overflow-hidden">
-      {/* Background gradient */}
-      <div className="absolute inset-0 overflow-hidden">
+      {/* Background gradient - Removed to avoid blocking links */}
+      {/* <div className="absolute inset-0 overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(ellipse_at_top,rgba(16,185,129,0.3)_0%,rgba(10,80,60,0.2)_45%,rgba(0,0,0,0.1)_100%)]" />
         </div>
-      </div>
+      </div> */}
+
       <div className="relative z-50 pt-20">
         <Navbar />
         <Routes>
@@ -50,10 +55,78 @@ function App() {
             }
           />
           <Route path="/category/:category" element={<CategoryPage />} />
+          <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/cart" element={<CartPage />} />
         </Routes>
       </div>
       <Toaster />
+      {/* <footer className="footer">
+        <div className="container d-flex justify-content-between align-items-center">
+          <span>&copy; Soumyadeep Singh</span>
+          <div className="social-icons">
+            <a
+              href="https://www.linkedin.com/in/soumyadeep-singh-347044258/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span>
+                <i className="bi bi-linkedin"></i>
+              </span>
+            </a>
+            <a
+              href="https://github.com/singhsoumya0109"
+              target="_blank"
+              className="github-icon"
+              rel="noreferrer"
+            >
+              <span>
+                <i className="bi bi-github"></i>
+              </span>
+            </a>
+            <a
+              href="https://singhsoumya0109.github.io/Portfolio-website/"
+              target="_blank"
+              className="portfolio-icon"
+              rel="noreferrer"
+            >
+              <span>
+                <i className="bi bi-briefcase"></i>
+              </span>
+            </a>
+          </div>
+        </div>
+      </footer> */}
+      <footer className="bg-gray-800 text-white py-4 mt-10">
+        <div className="container mx-auto flex flex-col md:flex-row justify-between items-center px-6">
+          <span className="text-lg">&copy; Soumyadeep Singh</span>
+          <div className="flex space-x-4 mt-3 md:mt-0">
+            <a
+              href="https://www.linkedin.com/in/soumyadeep-singh-347044258/"
+              target="_blank"
+              rel="noreferrer"
+              className="text-gray-400 hover:text-white transition"
+            >
+              <i className="bi bi-linkedin text-xl"></i>
+            </a>
+            <a
+              href="https://github.com/singhsoumya0109"
+              target="_blank"
+              rel="noreferrer"
+              className="text-gray-400 hover:text-white transition"
+            >
+              <i className="bi bi-github text-xl"></i>
+            </a>
+            <a
+              href="https://singhsoumya0109.github.io/Portfolio-website/"
+              target="_blank"
+              rel="noreferrer"
+              className="text-gray-400 hover:text-white transition"
+            >
+              <i className="bi bi-briefcase text-xl"></i>
+            </a>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
