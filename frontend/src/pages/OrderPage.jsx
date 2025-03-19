@@ -45,12 +45,9 @@ export default class OrderPage extends Component {
                 className="bg-white shadow-lg rounded-lg p-6 border border-gray-200"
               >
                 <div className="mb-4">
-                  {/* <p className="text-lg font-semibold text-gray-800">
-                    Order ID: <span className="text-blue-600">{order._id}</span>
-                  </p> */}
                   <p className="text-gray-600">
                     <strong>Total Amount:</strong>{" "}
-                    <span className="text-green-600">${order.totalAmount}</span>
+                    <span className="text-green-600">₹{order.totalAmount}</span>
                   </p>
                   <p className="text-gray-500 text-sm mt-1">
                     <strong>Ordered On:</strong>{" "}
@@ -96,7 +93,7 @@ export default class OrderPage extends Component {
                             </p>
                           </div>
                           <p className="text-gray-800 font-medium">
-                            ${productItem.price}
+                            ₹{productItem.price}
                           </p>
                         </li>
                       );

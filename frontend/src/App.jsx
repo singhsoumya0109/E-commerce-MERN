@@ -60,7 +60,7 @@ function App() {
           <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/payment" element={<Payment />} />
-          <Route path="/orders" element={<OrderPage />} />
+          <Route path="/orders" element={!user ? <Navigate to="/login" /> :<OrderPage />} />
         </Routes>
       </div>
       <Toaster />
