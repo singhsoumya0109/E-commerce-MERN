@@ -8,13 +8,13 @@ import ProductsList from "../components/ProductsList";
 import { useProductStore } from "../stores/useProductStore";
 
 const tabs = [
-  { id: "create", label: "Create Product", icon: PlusCircle },
   { id: "products", label: "Products", icon: ShoppingBasket },
+  { id: "create", label: "Create Product", icon: PlusCircle },
   { id: "analytics", label: "Analytics", icon: BarChart },
 ];
 
 const AdminPage = () => {
-  const [activeTab, setActiveTab] = useState("create");
+  const [activeTab, setActiveTab] = useState("products");
   const { fetchAllProducts } = useProductStore();
 
   useEffect(() => {

@@ -58,7 +58,7 @@ const FeaturedProducts = ({ featuredProducts }) => {
                       <img
                         src={product.image}
                         alt={product.name}
-                        className="w-full h-48 object-cover transition-transform duration-300 ease-in-out hover:scale-110"
+                        className="w-full h-100  object-cover transition-transform duration-300 ease-in-out hover:scale-110"
                       />
                     </div>
                     <div className="p-4">
@@ -66,7 +66,7 @@ const FeaturedProducts = ({ featuredProducts }) => {
                         {product.name}
                       </h3>
                       <p className="text-emerald-300 font-medium mb-4">
-                        ${product.price.toFixed(2)}
+                        ₹{product.price.toFixed(2)}
                       </p>
                       <button
                         onClick={() => addToCart(product)}

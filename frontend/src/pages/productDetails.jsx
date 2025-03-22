@@ -50,7 +50,7 @@ const ProductDetails = () => {
         <img
           src={product.image}
           alt={product.name}
-          className="w-64 h-64 object-cover rounded-lg shadow-lg"
+          className="w-80 h-100 object-cover rounded-lg shadow-lg"
         />
         <div className="md:ml-10 mt-6 md:mt-0">
           <h1 className="text-3xl font-bold">{product.name}</h1>
