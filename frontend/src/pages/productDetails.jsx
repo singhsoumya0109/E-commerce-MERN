@@ -58,7 +58,10 @@ const ProductDetails = () => {
           <p className="text-green-500 text-xl mt-4">₹{product.price}</p>
           <p className="text-gray-400 mt-2">Category: {product.category}</p>
           <p className="text-yellow-400 mt-2">
-            Rating: {product.averageRating?.toFixed(1) || "No rating"} ⭐
+            Rating:{" "}
+            {product.reviews.length > 0 && product.averageRating > 0
+              ? `${product.averageRating.toFixed(1)} ⭐`
+              : "No reviews"}
           </p>
         </div>
       </div>
